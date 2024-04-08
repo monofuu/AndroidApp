@@ -55,5 +55,4 @@ public class ResponsesServlet extends HttpServlet {
  
       out.println("</body></html>");
       out.close();
-   }
 }
