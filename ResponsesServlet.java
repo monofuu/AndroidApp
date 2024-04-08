@@ -22,7 +22,7 @@ public class ResponsesServlet extends HttpServlet {
       // Print an HTML page as the output of the query
       out.println("<!DOCTYPE html>");
       out.println("<html>");
-      out.println("<head><title>Responses</title></head>");
+      out.println("<head><title>Your Response</title></head>");
       out.println("<body>");
 
       try (
