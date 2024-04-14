@@ -4,6 +4,15 @@ body{
     font-family: "Montserrat", sans-serif;   
   }
 
+.centerboxstart{
+    padding: 190px 0;
+    text-align: center;
+}
+
+.centerboxgraph{
+    padding: 80px 0;
+    text-align: center;
+}
 
 .box {
     height: 100px;
