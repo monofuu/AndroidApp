@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Clicker</string>
+    <string name="buttonALabel">A</string>
+    <string name="buttonBLabel">B</string>
+    <string name="buttonCLabel">C</string>
+    <string name="buttonDLabel">D</string>
+</resources>
