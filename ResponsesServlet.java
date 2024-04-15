@@ -40,7 +40,7 @@ public class ResponsesServlet extends HttpServlet {
             String sqlStr;
             int count;
                 String choice = request.getParameter("choice");
-                sqlStr = "INSERT INTO responses (questionNo, choice) VALUES (8, '" + choice + "');";
+                sqlStr = "INSERT INTO responses (questionNo, choice) VALUES (1, '" + choice + "');";
                 out.println("<p>" + sqlStr + "</p>");  // for debugging
                 count = stmt.executeUpdate(sqlStr);
                 out.println("<p>" + count + " records inserted.</p>");
