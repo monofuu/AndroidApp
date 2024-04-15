@@ -10,8 +10,9 @@ body{
 }
 
 .centerboxgraph{
-    padding: 80px 0;
+    padding: 190px 0px 0px 350px;
     text-align: center;
+    z-index: 1;
 }
 
 .box {
