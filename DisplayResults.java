@@ -24,7 +24,6 @@ public class DisplayResults extends HttpServlet {
       out.println("<!DOCTYPE html>");
       out.println("<html>");
       out.println("<head>");
-      out.println("<title>Results</title>");
       out.println("<meta charset='UTF-8'>");
       out.println("<link rel='preconnect' href='https://fonts.googleapis.com'>");
       out.println("<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>");
@@ -33,40 +32,49 @@ public class DisplayResults extends HttpServlet {
       out.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>");
 
       out.println("<link rel='stylesheet' href='button.css'>");
-      out.println("<link rel='stylesheet' href='chart.css'>");   
+      out.println("<link rel='stylesheet' href='boxes.css'>");   
 
       out.println("</head>");
+      out.println("<title>Results</title>");
       out.println("<body>");
-
+      out.println("<a href='http://localhost:9999/clicker/end.html' class='button'>Next</a>");
+      out.println("<center><p style = 'font-size: 50px;'><b>What is 1 + 1?</b></p></center>");
       out.println("<div class='centerboxgraph'>");
       out.println("<canvas id='myChart' style='width:100%;max-width:600px'></canvas>");
       out.println("<script>");
 
-      out.println("var xValues = ['1', '2', '3', '4'];");
 
-      try (
-        // Step 1: Allocate a database 'Connection' object
-        Connection conn = DriverManager.getConnection(
-              "jdbc:mysql://localhost:3306/clicker?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
-              "myuser", "1234");   // For MySQL
-              // The format is: "jdbc:mysql://hostname:port/databaseName", "username", "password"
+      out.println("var barColors = ['red', 'blue','yellow','green']");
 
-        // Step 2: Allocate a 'Statement' object in the Connection
+
+     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/clickerdb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
+     "myuser", "1234")) {
         Statement stmt = conn.createStatement();
-     ) {
-        // Step 3: Execute a SQL SELECT query
-        String sqlStr1, sqlStr2, sqlStr3, sqlStr4;
-        sqlStr1 = "SELECT COUNT(*) AS count FROM responses WHERE questionNo=1 AND choice = '1'";
-        sqlStr2 = "SELECT COUNT(*) AS count FROM responses WHERE questionNo=1 AND choice = '2'";        
-        sqlStr3 = "SELECT COUNT(*) AS count FROM responses WHERE questionNo=1 AND choice = '3'";
-        sqlStr4 = "SELECT COUNT(*) AS count FROM responses WHERE questionNo=1 AND choice = '4'";
-        ResultSet rset1 = stmt.executeQuery(sqlStr1); 
-        ResultSet rset2 = stmt.executeQuery(sqlStr2); 
-        ResultSet rset3 = stmt.executeQuery(sqlStr3); 
-        ResultSet rset4 = stmt.executeQuery(sqlStr4); 
 
-        out.println("var yValues = [" + "'" + rset1.getString("count") + "'," + "'" + rset2.getString("count") + "'," + 
-        "'" + rset3.getString("count") + "'," + "'" + rset4.getString("count") + "'];");
+        String sql = "SELECT choice, COUNT(*) AS count FROM responses " +
+                     "WHERE questionNo = 1 GROUP BY choice";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        StringBuilder xValuesBuilder = new StringBuilder("['A', 'B', 'C', 'D']");
+        StringBuilder yValuesBuilder = new StringBuilder("[");
+
+        while (rs.next()) {
+            yValuesBuilder.append(rs.getInt("count") + ",");
+        }
+
+        // Remove trailing comma
+        xValuesBuilder.deleteCharAt(xValuesBuilder.length() - 1);
+        yValuesBuilder.deleteCharAt(yValuesBuilder.length() - 1);
+
+        
+        xValuesBuilder.append("]");
+        yValuesBuilder.append("]");
+
+        String xValuesString = xValuesBuilder.toString();
+        String yValuesString = yValuesBuilder.toString();
+
+        out.println("var xValues = " + xValuesString + ";");
+        out.println("var yValues = " + yValuesString + ";");
 
         out.println("new Chart('myChart', {type: 'bar', data: {labels: xValues,datasets: [{backgroundColor: barColors,data: yValues}]},options: {legend: {display: false},title: {display: true,text: 'Answers'}}});</script>");
         }
