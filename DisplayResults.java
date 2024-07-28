@@ -1,14 +1,11 @@
-// To save as "<TOMCAT_HOME>\webapps\hello\WEB-INF\classes\QueryServlet.java".
+
 import java.io.*;
 import java.sql.*;
-import jakarta.servlet.*;             // Tomcat 10
+import jakarta.servlet.*;             
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-//import javax.servlet.*;             // Tomcat 9
-//import javax.servlet.http.*;
-//import javax.servlet.annotation.*;
 
-@WebServlet("/display")   // Configure the request URL for this servlet (Tomcat 7/Servlet 3.0 upwards)
+@WebServlet("/display")   // Configure the request URL for this servlet
 public class DisplayResults extends HttpServlet {
 
    // The doGet() runs once per HTTP GET request to this servlet.
@@ -84,7 +81,7 @@ public class DisplayResults extends HttpServlet {
                 out.println("<p>Check Tomcat console for details.</p>");
                 ex.printStackTrace();
             }
-             // Step 5: Close conn and stmt - Done automatically by try-with-resources (JDK 7)
+
             out.println("</div>");
             out.println("</body></html>");
             out.close();          
