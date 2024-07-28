@@ -1,17 +1,14 @@
-// To save as "ebookshop\WEB-INF\classes\QueryServlet.java".
+
 import java.io.*;
 import java.sql.*;
-import jakarta.servlet.*;            // Tomcat 10 (Jakarta EE 9)
+import jakarta.servlet.*;            
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-//import javax.servlet.*;            // Tomcat 9 (Java EE 8 / Jakarta EE 8)
-//import javax.servlet.http.*;
-//import javax.servlet.annotation.*;
 
-@WebServlet("/select")   // Configure the request URL for this servlet (Tomcat 7/Servlet 3.0 upwards)
+@WebServlet("/select") 
 public class ResponsesServlet extends HttpServlet {
 
-   // The doGet() runs once per HTTP GET request to this servlet.
+
    @Override
    public void doGet(HttpServletRequest request, HttpServletResponse response)
                throws ServletException, IOException {
@@ -26,13 +23,11 @@ public class ResponsesServlet extends HttpServlet {
       out.println("<body>");
 
       try (
-         // Step 1: Allocate a database 'Connection' object
          Connection conn = DriverManager.getConnection(
                "jdbc:mysql://localhost:3306/clicker?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
-               "myuser", "xxxx");   // For MySQL
+               "myuser", "xxxx"); 
                // The format is: "jdbc:mysql://hostname:port/databaseName", "username", "password"
 
-         // Step 2: Allocate a 'Statement' object in the Connection
          Statement stmt = conn.createStatement();
       ) {
          String[] questionNos = request.getParameterValues("questionNo");
@@ -48,10 +43,10 @@ public class ResponsesServlet extends HttpServlet {
                      + " has been recorded.</h3>");
             }
             out.println("<h3>Thank you.<h3>");
-         } else { // No book selected
+         } else {
             out.println("<h3>Please select a question number!</h3>");
          }
-      }  // Step 5: Close conn and stmt - Done automatically by try-with-resources (JDK 7)
+      }
  
       out.println("</body></html>");
       out.close();
